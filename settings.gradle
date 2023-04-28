@@ -1,0 +1,6 @@
+rootProject.name = 'three-resvices-in-docker'
+include 'core'
+include 'kitchen'
+include 'restaurant'
+include 'delivery'
+

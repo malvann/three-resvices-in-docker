@@ -1,0 +1,12 @@
+dependencies {
+    implementation(project(':core'))
+}
+
+bootJar {
+    enabled(true)
+    classifier("")
+}
+
+jar {
+    enabled(false)
+}

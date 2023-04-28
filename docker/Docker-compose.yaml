@@ -1,0 +1,39 @@
+version: '1'
+services:
+  restaurant_db:
+#    jdbc:postgresql://localhost:5432/restaurant_db
+    image: postgres:14.1
+    container_name: db
+    restart: on-failure
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: restaurant_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./initdb/init.sql:/docker-entrypoint-initdb.d/init.sql
+  restaurant:
+    container_name: restaurant
+    image: restaurant
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    build:
+      restaurant
+    depends_on:
+      - restaurant_db
+#      - kitchen
+#      - delivery
+  kitchen:
+    container_name: kitchen
+    image: kitchen
+    restart: on-failure
+    ports:
+      - "8081:8081"
+  delivery:
+    container_name: delivery
+    image: delivery
+    restart: on-failure
+    ports:
+      - "8082:8082"

@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: restaurant
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+  datasource:
+    url: jdbc:postgresql://restaurant_db:5432/restaurant_db
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+server:
+  port: 8080
+
+kitchen:
+  port: 8081
+
+delivery:
+  port: 8082
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/restaurant_db
