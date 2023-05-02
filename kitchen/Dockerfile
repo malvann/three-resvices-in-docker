@@ -1,4 +1,3 @@
-FROM openjdk:19 as kitchen
+FROM openjdk:21-ea-19-slim-buster as kitchen
 WORKDIR /app
 COPY build/libs/* ./
-CMD ["java","-jar","kitchen.jar"]

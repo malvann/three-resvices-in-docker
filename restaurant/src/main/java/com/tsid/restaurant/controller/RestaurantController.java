@@ -66,7 +66,7 @@ public class RestaurantController {
         return ResponseEntity.badRequest().body(null);
     }
 
-    //manually by administrator
+    // todo manually by administrator
     @PutMapping(DOM_URL + "/update")
     public ResponseEntity<Order> updateOrder(@RequestBody OrderUpdateRequest request) {
         try {
@@ -80,13 +80,14 @@ public class RestaurantController {
         return ResponseEntity.badRequest().body(null);
     }
 
-    //manually by administrator
+    //todo manually by administrator
     @GetMapping(DOM_URL + "/delete/{id}")
     public ResponseEntity<Long> deleteOrder(@PathVariable Long id) {
         orderRepository.deleteById(id);
         return ResponseEntity.ok(id);
     }
 
+    //todo better to use mapper
     private static Order fillByRequest(Order order, OrderCreateRequest request) throws JsonProcessingException {
         if (order.getId() == null) {
             order.setId(RANDOM.nextLong(0, Long.MAX_VALUE));

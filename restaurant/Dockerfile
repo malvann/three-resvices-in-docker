@@ -1,4 +1,3 @@
-FROM openjdk:19 as restaurant
+FROM openjdk:21-ea-19-slim-buster as restaurant
 WORKDIR /app
 COPY build/libs/* ./
-CMD ["java","-jar","restaurant.jar"]

@@ -1,39 +1,48 @@
 version: '1'
 services:
   restaurant_db:
-#    jdbc:postgresql://localhost:5432/restaurant_db
     image: postgres:14.1
     container_name: db
-    restart: on-failure
+    restart: unless-stopped
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: restaurant_db
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432"
+      - '${DB_PORT}:${DB_PORT}'
     volumes:
       - ./initdb/init.sql:/docker-entrypoint-initdb.d/init.sql
   restaurant:
     container_name: restaurant
     image: restaurant
-    restart: on-failure
+    restart: unless-stopped
+    command: ["java","-jar","restaurant.jar"]
+    build: restaurant
+    env_file:
+      - ../.env
     ports:
-      - "8080:8080"
-    build:
-      restaurant
+      - '${REST_PORT}:${REST_PORT}'
     depends_on:
       - restaurant_db
-#      - kitchen
-#      - delivery
+      - kitchen
+      - delivery
   kitchen:
     container_name: kitchen
     image: kitchen
-    restart: on-failure
+    restart: unless-stopped
+    command: ["java","-jar","kitchen.jar"]
+    build: kitchen
+    env_file:
+      - ../.env
     ports:
-      - "8081:8081"
+      - '${KITCH_PORT}:${KITCH_PORT}'
   delivery:
     container_name: delivery
     image: delivery
-    restart: on-failure
+    restart: unless-stopped
+    command: ["java","-jar","delivery.jar"]
+    build: delivery
+    env_file:
+      - ../.env
     ports:
-      - "8082:8082"
+      - '${DELIV_PORT}:${DELIV_PORT}'

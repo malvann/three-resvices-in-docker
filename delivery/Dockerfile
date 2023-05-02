@@ -1,4 +1,3 @@
-FROM openjdk:19 as delivery
+FROM openjdk:21-ea-19-slim-buster as delivery
 WORKDIR /app
 COPY build/libs/* ./
-CMD ["java","-jar","delivery.jar"]

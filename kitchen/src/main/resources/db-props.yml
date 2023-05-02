@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    generate-ddl: true
+  datasource:
+    url: 'jdbc:postgresql://${POSTGRES_DB}:${DB_PORT}/${POSTGRES_DB}'
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: 'jdbc:postgresql://localhost:${DB_PORT}/${POSTGRES_DB}'

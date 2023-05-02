@@ -1,11 +1,9 @@
 spring:
   application:
-    name: restaurant
+    name: kitchen
   config:
     import: db-props.yml
 server:
-  port: ${REST_PORT}
-kitchen:
   port: ${KITCH_PORT}
-delivery:
-  port: ${DELIV_PORT}
+restaurant:
+  port: ${REST_PORT}
