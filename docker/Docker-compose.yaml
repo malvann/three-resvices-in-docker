@@ -4,6 +4,8 @@ services:
     image: postgres:14.1
     container_name: db
     restart: unless-stopped
+    networks:
+      - tsid-network
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -12,12 +14,17 @@ services:
       - '${DB_PORT}:${DB_PORT}'
     volumes:
       - ./initdb/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/src:/usr/src/db/src
   restaurant:
     container_name: restaurant
     image: restaurant
     restart: unless-stopped
     command: ["java","-jar","restaurant.jar"]
-    build: restaurant
+    build:
+      dockerfile: ../restaurant/Dockerfile #in case of multiple docker files
+      context: restaurant
+    networks:
+      - tsid-network
     env_file:
       - ../.env
     ports:
@@ -32,6 +39,8 @@ services:
     restart: unless-stopped
     command: ["java","-jar","kitchen.jar"]
     build: kitchen
+    networks:
+      - tsid-network
     env_file:
       - ../.env
     ports:
@@ -42,7 +51,14 @@ services:
     restart: unless-stopped
     command: ["java","-jar","delivery.jar"]
     build: delivery
+    networks:
+      - tsid-network
     env_file:
       - ../.env
     ports:
       - '${DELIV_PORT}:${DELIV_PORT}'
+volumes:
+  restaurant_db:
+networks:
+  tsid-network:
+    driver: bridge

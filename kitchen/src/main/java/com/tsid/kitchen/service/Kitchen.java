@@ -10,6 +10,7 @@ import component.RestService;
 import component.Sleeper;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 import static constant.UrlPath.RestaurantUrl.GET_DONE_KITCHEN_URL;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class Kitchen extends AbstractScheduledService {
     private final PortValues portValues;

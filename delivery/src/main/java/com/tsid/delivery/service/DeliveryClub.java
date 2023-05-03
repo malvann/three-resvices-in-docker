@@ -36,7 +36,9 @@ public class DeliveryClub extends AbstractScheduledService {
     //в 9:00 достать все !busy и положить в freeDelivers
     public synchronized void updateFreeDelivers() {
         freeDelivers.addAll(deliverRepository.findAllByBusyFalse());
-        log.info("Daily deliverers: {}", freeDelivers);
+        log.info("Available delivers deliverers: {}", freeDelivers.stream()
+                .map(deliver -> "%s:%s".formatted(deliver.getName(), deliver.getContact()))
+                .toList());
     }
 
     // принимать сообшение от Restaurant, класть в orders
